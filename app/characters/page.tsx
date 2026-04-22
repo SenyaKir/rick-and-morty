@@ -1,4 +1,4 @@
-import CharacterList from "../components/CharacterList"
+import CharacterList from "../components/characters/CharacterList"
 import { getCharacters } from "../lib/api"
 
 

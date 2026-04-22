@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { Character } from "../types/character";
+import { Character } from "../../types/character";
 import CharacterCard from "./CharacterCard";
 import FilterBar from "./FilterBar";
 
