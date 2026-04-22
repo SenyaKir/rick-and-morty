@@ -2,14 +2,21 @@ import Image from 'next/image'
 import { Character } from '../types/character'
 
 type CharacterCardProps = {
-  character: Character
+  character: Character,
+  index?: number,
 }
 
-export default function CharacterCard({ character }: CharacterCardProps) {
+export default function CharacterCard({ character, index }: CharacterCardProps) {
   return (
     <div className="character-card">
       <div className="char-card__image">
-        <Image src={character.image} alt={character.name} width={258} height={258} />
+        <Image 
+          src={character.image} 
+          alt={character.name} 
+          width={258} 
+          height={258} 
+          priority={index === 0}
+        />
       </div>
       <div className="char-card__info">
         <h2 className='char-card__name' title={character.name}>

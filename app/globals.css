@@ -151,6 +151,9 @@ nav {
 }
 
 .episodes-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 1100px;
   margin: 0 auto;
   padding: 40px;
@@ -160,9 +163,10 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 204px;
+  gap: 24px;
   border-bottom: 2px solid #1e3a1e;
   padding: 12px;
+  width: 70vw;
 }
 
 .episodes-page__item p{
@@ -179,4 +183,5 @@ nav {
 
 .episodes-page__episode{
   font-family: var(--font-mono);
+  letter-spacing: 0.1em;
 }
