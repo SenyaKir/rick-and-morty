@@ -8,8 +8,8 @@ export default function Header() {
       <nav className="font-sans">
         <Link href="/">Home</Link>
         <Link href="/characters">Characters</Link>
-        <Link href="/episode">Episode</Link>
-        <Link href="/location">Location</Link>
+        <Link href="/episodes">Episodes</Link>
+        <Link href="/locations">Locations</Link>
       </nav>
     </header>
   );

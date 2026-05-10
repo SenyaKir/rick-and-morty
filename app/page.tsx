@@ -1,7 +1,13 @@
 import Image from 'next/image'
+import { getAllEpisodes, getLocations, getCharacters } from './lib/api'
+import Link from 'next/link'
 
 
-export default function Home() {
+export default async function Home() {
+  const { info: charInfo } = await getCharacters()
+  const { info: locInfo } = await getLocations()
+  const episodes = await getAllEpisodes()
+
   return (
     <main className='main'>
       <section className='intro'>
@@ -11,26 +17,26 @@ export default function Home() {
         alt="Rick and Morty"
         width={700}
         height={700}
+        priority
       />
       <p>
         Wubba Lubba Dub Dub &bull; The universe in your browser
       </p>
       </section>
       <section className='stats'>
-        <div className='stat-card'>
-          <p>200</p>
+        <Link href="/characters" className='stat-card'>
+          <p>{charInfo.count}</p>
           <p>characters</p>
-        </div>
-        <div className='stat-card'>
-          <p>40</p>
+        </Link>
+        <Link href="/episodes" className='stat-card'>
+          <p>{episodes.length}</p>
           <p>episodes</p>
-        </div>
-        <div className='stat-card'>
-          <p>120</p>
+        </Link>
+        <Link href="/locations" className='stat-card'>
+          <p>{locInfo.count}</p>
           <p>locations</p>
-        </div>
+        </Link>
       </section>
-
     </main>
   );
 }

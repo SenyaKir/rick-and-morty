@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import { Character } from '../types/character'
+import { Character } from '@/app/types/character'
+import Link from 'next/link'
 
 type CharacterCardProps = {
   character: Character,
@@ -8,7 +9,7 @@ type CharacterCardProps = {
 
 export default function CharacterCard({ character, index }: CharacterCardProps) {
   return (
-    <div className="character-card">
+    <Link href={`/characters/${character.id}`} className="character-card">
       <div className="char-card__image">
         <Image 
           src={character.image} 
@@ -35,6 +36,6 @@ export default function CharacterCard({ character, index }: CharacterCardProps) 
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

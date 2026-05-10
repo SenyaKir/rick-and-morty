@@ -1,20 +1,34 @@
-type Props = {
-  filter: string;
-  setFilter: (filter: string) => void;
-};
+'use client'
 
-export default function FilterBar({ filter, setFilter }: Props) {
-  const statuses = ['all', 'alive', 'dead', 'unknown'];
+import { useRouter, useSearchParams } from "next/navigation"
+
+export default function FilterBar() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const status = searchParams.get('status') || 'all'
+
+  const setFilter = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (value === 'all') {
+      params.delete('status')
+    } else {
+      params.set('status', value)
+    }
+    params.delete('page')
+    router.push(`/characters?${params}`)
+  }
 
   return (
     <div className="filter-bar">
-      {statuses.map((status) => (
-        <div key={status} className={`filter-btn ${filter === status && "filter-btn--active"}`}
-          onClick={() => setFilter(status)}
+      {['all', 'alive', 'dead', 'unknown'].map((s) => (
+        <div
+          key={s}
+          className={`filter-btn ${status === s ? 'filter-btn--active' : ''}`}
+          onClick={() => setFilter(s)}
         >
-          {status.charAt(0).toUpperCase() + status.slice(1)}
+          {s.charAt(0).toUpperCase() + s.slice(1)}
         </div>
       ))}
     </div>
-  );
+  )
 }

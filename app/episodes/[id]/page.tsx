@@ -1,4 +1,4 @@
-import CharacterCard from "@/app/components/characters/CharacterCard";
+import EpisodeResidents from "@/app/components/episodes/EpisodeResidents";
 import { getCharactersByIds, getEpisodesById } from "@/app/lib/api";
 import { Character } from "@/app/types/character";
 import Link from "next/link";
@@ -15,17 +15,13 @@ export default async function Episodes({ params }: { params: Promise<{ id: strin
         <h1>{episode.name}</h1>
         <p>{episode.air_date}</p>
         <Link 
-          href="/episode"
+          href="/episodes"
           className="episode-detail__header-back"
         >
           Back to episodes
         </Link>
       </div>
-      <div className="characters-grid">
-        {characters.map((character: Character) => (
-          <CharacterCard key={character.id} character={character} />
-        ))}
-      </div>
+      <EpisodeResidents characters={characters} />
     </div>
   )
 }

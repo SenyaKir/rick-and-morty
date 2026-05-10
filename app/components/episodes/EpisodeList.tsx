@@ -25,7 +25,7 @@ export default function EpisodeList({episodes}:{episodes: Episode[]}) {
     {filteredEpisodes.map((episode) => (
       <Link 
         key={episode.id} 
-        href={`/episode/${episode.id}`}
+        href={`/episodes/${episode.id}`}
         className="episodes-page__item"
       >
         <div className="episodes-page__header">

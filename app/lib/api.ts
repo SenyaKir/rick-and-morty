@@ -1,35 +1,69 @@
-export async function getCharacters() {
-  const data = await fetch('https://rickandmortyapi.com/api/character')
-  const characters = await data.json()
-  return characters.results
+const BASE_URL = 'https://rickandmortyapi.com/api'
+
+async function fetcher(url: string) {
+  const data = await fetch(url)
+  if (!data.ok) {
+    throw new Error(`Failed to fetch: ${url}`)
+  }
+  return data.json()
+}
+
+export async function getCharacters(page: number = 1, status?: string) {
+  const params = new URLSearchParams()
+  params.append('page', String(page))
+  if (status) {
+    params.append('status', status)
+  }
+  
+  const json = await fetcher(`${BASE_URL}/character?${params}`)
+  return { characters: json.results, info: json.info }
 }
 
 export async function getCharactersById(id: string) {
-  const data = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
-  const character = await data.json()
-  return character
+  return fetcher(`${BASE_URL}/character/${id}`)
 }
 
 export async function getCharactersByIds(ids: string[]) {
-  const data = await fetch(`https://rickandmortyapi.com/api/character/${ids.join(',')}`)
-  const character = await data.json()
-  return character
+  const data = await fetch(`${BASE_URL}/character/${ids.join(',')}`)
+  const json = await data.json()
+  return Array.isArray(json) ? json : [json]
 }
 
-export async function getLocations() {
-  const data = await fetch('https://rickandmortyapi.com/api/location')
-  const locations = await data.json()
-  return locations.results
+export async function getAllLocations() {
+  const first = await fetcher(`${BASE_URL}/location`)
+  const pages = await Promise.all(
+    Array.from({ length: first.info.pages }, (_, i) =>
+      fetcher(`${BASE_URL}/location?page=${i + 1}`)
+    )
+  )
+  return pages.flatMap((page) => page.results)
 }
 
-export async function getEpisodes() {
-  const data = await fetch('https://rickandmortyapi.com/api/episode')
-  const episodes = await data.json()
-  return episodes.results
+export async function getLocations(page: number = 1, type?: string) {
+  const params = new URLSearchParams()
+  params.append('page', String(page))
+  if (type) {
+    params.append('type', type)
+  }
+
+  const json = await fetcher(`${BASE_URL}/location?${params}`)
+  return { locations: json.results, info: json.info }
+}
+
+export async function getLocationsById(id: string) {
+  return fetcher(`${BASE_URL}/location/${id}`)
+}
+
+export async function getAllEpisodes() {
+  const first = await fetcher(`${BASE_URL}/episode`)
+  const pages = await Promise.all(
+    Array.from({ length: first.info.pages }, (_, i) =>
+      fetcher(`${BASE_URL}/episode?page=${i + 1}`)
+    )
+  )
+  return pages.flatMap((page) => page.results)
 }
 
 export async function getEpisodesById(id: string) {
-  const data = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
-  const episode = await data.json()
-  return episode
+  return fetcher(`${BASE_URL}/episode/${id}`)
 }
