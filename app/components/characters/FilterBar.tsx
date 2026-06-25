@@ -21,13 +21,14 @@ export default function FilterBar() {
   return (
     <div className="filter-bar">
       {['all', 'alive', 'dead', 'unknown'].map((s) => (
-        <div
+        <button
           key={s}
+          type="button"
           className={`filter-btn ${status === s ? 'filter-btn--active' : ''}`}
           onClick={() => setFilter(s)}
         >
           {s.charAt(0).toUpperCase() + s.slice(1)}
-        </div>
+        </button>
       ))}
     </div>
   )

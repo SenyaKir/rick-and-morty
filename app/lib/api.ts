@@ -1,22 +1,28 @@
+import { Character } from '@/app/types/character'
+
 const BASE_URL = 'https://rickandmortyapi.com/api'
 
 async function fetcher(url: string) {
-  const data = await fetch(url)
+  const data = await fetch(url, { next: { revalidate: 3600 } })
   if (!data.ok) {
     throw new Error(`Failed to fetch: ${url}`)
   }
   return data.json()
 }
 
-export async function getCharacters(page: number = 1, status?: string) {
+export async function getCharacters(page: number = 1, status?: string, name?: string) {
   const params = new URLSearchParams()
   params.append('page', String(page))
-  if (status) {
-    params.append('status', status)
+  if (status) params.append('status', status)
+  if (name) params.append('name', name)
+
+  // API повертає 404 якщо нічого не знайдено — обробляємо це gracefully
+  try {
+    const json = await fetcher(`${BASE_URL}/character?${params}`)
+    return { characters: json.results as Character[], info: json.info }
+  } catch {
+    return { characters: [], info: { count: 0, pages: 0, next: null, prev: null } }
   }
-  
-  const json = await fetcher(`${BASE_URL}/character?${params}`)
-  return { characters: json.results, info: json.info }
 }
 
 export async function getCharactersById(id: string) {
@@ -24,8 +30,7 @@ export async function getCharactersById(id: string) {
 }
 
 export async function getCharactersByIds(ids: string[]) {
-  const data = await fetch(`${BASE_URL}/character/${ids.join(',')}`)
-  const json = await data.json()
+  const json = await fetcher(`${BASE_URL}/character/${ids.join(',')}`)
   return Array.isArray(json) ? json : [json]
 }
 

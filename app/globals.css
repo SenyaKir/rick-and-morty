@@ -472,3 +472,224 @@ nav {
   color: var(--color-stardust);
   font-size: 0.9em;
 }
+
+/* ===================== */
+/* ПРОНУМЕРОВАНА ПАГІНАЦІЯ */
+/* ===================== */
+
+.pagination-page-btn {
+  padding: 8px;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-card);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+}
+
+.pagination-page-btn:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.pagination-page-btn--active {
+  background-color: var(--foreground);
+  color: var(--background);
+  font-weight: 700;
+  cursor: default;
+  pointer-events: none;
+}
+
+.pagination-dots {
+  color: var(--color-stardust);
+  padding: 0 4px;
+}
+
+/* ===================== */
+/* ПОШУК                 */
+/* ===================== */
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.search-input {
+  padding: 8px 16px;
+  width: 280px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-card);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 0.9em;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--color-portal);
+}
+
+.search-btn {
+  padding: 8px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-card);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-btn:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 72px;
+  color: var(--color-stardust);
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+}
+
+/* ===================== */
+/* АДАПТИВНИЙ ДИЗАЙН     */
+/* ===================== */
+
+/* Планшет: до 1024px */
+@media (max-width: 1024px) {
+  .characters-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .character-card {
+    width: 100%;
+  }
+
+  .locations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .location-card {
+    width: 100%;
+  }
+}
+
+/* Мобільний: до 768px */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+  }
+
+  .characters-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .character-card {
+    width: 100%;
+  }
+
+  .characters-page {
+    padding: 20px 16px;
+  }
+
+  .filter-bar {
+    gap: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    width: 80px;
+    font-size: 0.85em;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .episodes-page {
+    padding: 20px 16px;
+  }
+
+  .episodes-page__item {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .episodes-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 1em;
+  }
+
+  .locations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .location-card {
+    width: 100%;
+  }
+
+  .locations-page {
+    padding: 20px 16px;
+  }
+
+  .pagination {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pagination-btn {
+    width: 70px;
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
+
+  .pagination-page-btn {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.8em;
+  }
+
+  .main {
+    padding: 24px 16px;
+    gap: 40px;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Маленький мобільний: до 480px */
+@media (max-width: 480px) {
+  .characters-grid {
+    grid-template-columns: 1fr;
+  }
+}

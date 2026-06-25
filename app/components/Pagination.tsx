@@ -17,6 +17,29 @@ export default function Pagination({ currentPage, totalPages }: Props) {
     return `?${params}`
   }
 
+  // Повертає масив сторінок: [1, '...', 5, 6, 7, 8, 9, '...', 42]
+  const getPages = (): (number | '...')[] => {
+    const pages: (number | '...')[] = []
+    const delta = 2 // кількість сторінок з кожного боку від поточної
+
+    const rangeStart = Math.max(2, currentPage - delta)
+    const rangeEnd = Math.min(totalPages - 1, currentPage + delta)
+
+    pages.push(1)
+
+    if (rangeStart > 2) pages.push('...')
+
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      pages.push(i)
+    }
+
+    if (rangeEnd < totalPages - 1) pages.push('...')
+
+    if (totalPages > 1) pages.push(totalPages)
+
+    return pages
+  }
+
   return (
     <div className="pagination">
       <Link
@@ -27,9 +50,21 @@ export default function Pagination({ currentPage, totalPages }: Props) {
       >
         Previous
       </Link>
-      <span className="pagination-info">
-        {currentPage} / {totalPages}
-      </span>
+
+      {getPages().map((page, index) =>
+        page === '...' ? (
+          <span key={`dots-${index}`} className="pagination-dots">...</span>
+        ) : (
+          <Link
+            key={page}
+            href={createUrl(page)}
+            className={`pagination-page-btn ${currentPage === page ? 'pagination-page-btn--active' : ''}`}
+          >
+            {page}
+          </Link>
+        )
+      )}
+
       <Link
         href={createUrl(currentPage + 1)}
         className={`pagination-btn ${currentPage === totalPages ? 'pagination-btn--disabled' : ''}`}
